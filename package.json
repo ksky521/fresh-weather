@@ -1,0 +1,52 @@
+{
+  "name": "weather",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "server": "nodemon ./server/index.js",
+    "start": "gulp watch",
+    "dev": "gulp dev",
+    "cloud": "gulp cloud:dev",
+    "build": "gulp build --type prod",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "nodemonConfig": {
+    "ignore": ["test/*", "book/*", "client/*", "bin/*", "node_modules", "dist/*", "package.json"],
+    "delay": "1000"
+  },
+  "engines": {
+    "node": ">=8"
+  },
+  "author": "ksky521@gmail.com",
+  "license": "ISC",
+  "devDependencies": {
+    "ansi-colors": "^2.0.5",
+    "babel-core": "^6.26.3",
+    "babel-preset-env": "^1.7.0",
+    "del": "^3.0.0",
+    "express": "^4.16.3",
+    "fancy-log": "^1.3.2",
+    "file-stream-rotator": "^0.2.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^7.0.1",
+    "gulp-cssnano": "^2.1.3",
+    "gulp-filter": "^5.1.0",
+    "gulp-htmlmin": "^4.0.0",
+    "gulp-jdists": "^2.2.3",
+    "gulp-jsonminify": "^1.1.0",
+    "gulp-postcss": "^7.0.1",
+    "gulp-rename": "^1.3.0",
+    "gulp-sass": "^4.0.1",
+    "gulp-sourcemaps": "^2.6.4",
+    "gulp-uglify": "^3.0.0",
+    "minimist": "^1.2.0",
+    "nodemon": "^1.18.3",
+    "postcss-font-base64": "^1.0.5",
+    "postcss-px2rpx": "0.0.4",
+    "request": "^2.87.0",
+    "run-sequence": "^2.2.1",
+    "stream-combiner2": "^1.1.1",
+    "through2": "^2.0.3"
+  },
+  "dependencies": {}
+}

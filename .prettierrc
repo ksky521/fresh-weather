@@ -1,0 +1,9 @@
+{
+  "singleQuote": true,
+  "prettier.tabWidth": 2,
+  "useTabs": false,
+  "bracketSpacing": false,
+  "bracesSpacing": false,
+  "spaceBeforeFunctionParen": true,
+  "semi": false
+}

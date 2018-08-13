@@ -1,0 +1,84 @@
+.calendar {
+  padding: 30rpx;
+}
+.container{
+  padding:0 20rpx;
+}
+.navigator{
+  padding:64rpx 20rpx 20rpx;
+  icon{
+    font-size: 32rpx;
+    color: #333;
+  }
+}
+button,
+.button {
+  background-color: #1aad19;
+
+  position: relative;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 14px;
+  padding-right: 14px;
+  box-sizing: border-box;
+  font-size: 16px;
+  text-align: center;
+  text-decoration: none;
+  color: #ffffff;
+  line-height: 2.55555556;
+  border-radius: 5px;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  overflow: hidden;
+  &:active {
+    color: rgba(255, 255, 255, 0.6);
+    background-color: #179b16;
+  }
+}
+.publish{
+  padding: 0 15rpx;
+
+  .title{
+    font-size: 28rpx;
+    line-height: 64rpx;
+    height: 64rpx;
+    text-align: center;
+  }
+}
+.colors {
+  display: flex;
+  margin-bottom: 40rpx;
+  .mood {
+    padding: 10rpx;
+    width: 20%;
+  }
+  .mood view {
+    width: 100rpx;
+    height: 100rpx;
+    border-radius: 50%;
+    position: relative;
+    margin: 0 auto;
+
+    .emoji{
+      color: black;
+      margin: 12rpx;
+      font-size: 68rpx;
+      text-align: center;
+    }
+  }
+  .mood view .checked {
+    font-size: 42rpx;
+    color: #09bb07;
+    position: absolute;
+    right: -4rpx;
+    top: -4rpx;
+  }
+
+  .todayMood{
+    margin: 0 auto;
+  }
+}
+
+.auth-button{
+  padding: 40rpx;
+}

@@ -1,0 +1,348 @@
+@mixin flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin flex-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-row {
+  @include flex-row;
+}
+
+.flex-column {
+  @include flex-column;
+}
+
+.block {
+  display: block;
+}
+
+$grid-margin: 20rpx;
+.container {
+  margin-bottom: $grid-margin;
+  max-width: 750rpx;
+  box-sizing: border-box;
+  color: #fff;
+}
+
+.wrapper {
+  .navigator {
+    color: white;
+    background: rgba(0, 0, 0, 0.1);
+    position: absolute;
+    right: 0;
+    top: 480rpx;
+    width: 40rpx;
+    border-radius: 20rpx 0 0 20rpx;
+    padding: 10rpx 20rpx;
+    z-index: 9999999;
+    icon {
+      font-size: 28rpx;
+    }
+  }
+}
+
+icon {
+  font-size: 32rpx;
+}
+
+// 顶图
+#effect {
+  width: 750rpx;
+  height: 768rpx;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.now {
+  height: 560rpx;
+  overflow: hidden;
+  position: relative;
+  color: #fff;
+  padding-top: 64rpx;
+
+  .location {
+    text-align: center;
+    font-size: 26rpx;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 0 200rpx;
+
+    icon {
+      font-size: 26rpx;
+      margin-right: 4rpx;
+    }
+  }
+  .air-quality {
+    position: absolute;
+    top: 120rpx;
+    left: 20rpx;
+    height: 28rpx;
+    line-height: 28rpx;
+    padding: 16rpx 20rpx;
+    border-radius: 8rpx;
+    color: #fff;
+    background: rgba(0, 0, 0, .1);
+    font-size: 24rpx;
+
+    .circle {
+      content: '';
+      display: inline-block;
+      width: 8rpx;
+      height: 28rpx;
+      margin-right: 14rpx;
+      vertical-align: middle;
+      border-radius: 4rpx;
+    }
+    .value {
+      vertical-align: middle;
+    }
+  }
+
+  .now-weather {
+    position: absolute;
+    top: 60%;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    transform: translateY(-50%);
+    line-height: 1;
+  }
+  .temp {
+    margin-bottom: 10rpx;
+  }
+  .temp text {
+    color: #fff;
+    font-weight: lighter;
+    font-family: helvetica-ultra-light;
+    font-size: 240rpx;
+    display: inline-block;
+    vertical-align: top;
+  }
+  .temp text.degree {
+    font-size: 80rpx;
+  }
+  .cur-weather {
+    font-size: 32rpx;
+    margin-bottom: 40rpx;
+    line-height: 1;
+    position: relative;
+    icon {
+      font-size: 32rpx;
+      margin-right: 10rpx;
+    }
+    .inline {
+      margin-bottom: 30rpx;
+      font-size: 32rpx;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+
+    .today {
+      @include flex-row;
+      .item {
+        display: block;
+        padding-right: 16rpx;
+        margin: 0 16rpx 0 0;
+        border-right: 2rpx solid rgba(255, 255, 255, .4);
+        font-size: 28rpx;
+        flex: 1;
+        text-align: right;
+        &:last-child {
+          text-align: left;
+          border: none;
+          padding: 0;
+          margin: 0;
+        }
+      }
+    }
+  }
+}
+
+// 两天天气
+.two-days {
+  @include flex-row;
+  $gap: 24rpx;
+  padding: $gap 0; // background: rgba(0, 0, 0, .1);
+  overflow: hidden;
+  width: 100%;
+  .item {
+    // height: 104rpx;
+    font-size: 28rpx;
+    line-height: 28rpx;
+    padding: 0 40rpx;
+    width: 50%;
+    border-right: 2rpx solid rgba(255, 255, 255, .4);
+    &:last-child {
+      border-right: none;
+    }
+    .top {
+      height: 24rpx;
+      margin-bottom: 26rpx;
+      margin-right: -20rpx;
+    }
+    .date {
+      float: left;
+    }
+    .temp {
+      float: right;
+    } // bottom
+    .bottom {
+      height: 44rpx text {
+        float: left;
+        height: 44rpx;
+        line-height: 44rpx;
+      }
+    }
+    icon {
+      float: right;
+      font-size: 44rpx;
+      height: 44rpx;
+      width: 44rpx;
+    }
+  }
+}
+
+// 详细天气
+.weather {
+  background-color: #62aadc;
+  .container {
+    background: rgba(0, 0, 0, .1);
+    overflow: hidden;
+    width: 100%;
+  }
+}
+
+//hourly
+.hourly {
+  // width: 1500rpx;
+  .scrollX {
+    // @include flex-row;
+    position: relative;
+    width: 928rpx;
+    padding: 40rpx 0;
+    height: 150rpx;
+  }
+  .item {
+    @include flex-column;
+    text-align: center;
+    width: 116rpx;
+    float: left;
+  }
+  .time,
+  .temp {
+    line-height: 24rpx;
+    height: 28rpx;
+    position: relative;
+  }
+  icon {
+    font-size: 48rpx;
+    margin: 20rpx auto 30rpx;
+  }
+}
+
+// week
+.week {
+  position: relative;
+  padding: 40rpx 0;
+  .week-weather {
+    @include flex-row;
+    text-align: center;
+    .item:first-child {
+      color: #e0e0e0;
+    }
+    .item {
+      flex: 1;
+      .day,
+      .date,
+      .wind {
+        color: #efefef;
+      }
+      .wind {
+        font-size: 24rpx;
+        line-height: 24rpx;
+        height: 24rpx;
+        width: 80rpx;
+        margin: 0 auto 12rpx;
+        overflow: hidden;
+      }
+      .date {
+        margin: 10rpx 0 30rpx;
+        font-size: 24rpx;
+      }
+      .wt {
+        margin-bottom: 30rpx;
+      }
+      .night {
+        margin-top: 272rpx;
+      }
+      .night .wt {
+        margin: 32rpx 0 30rpx;
+      }
+      icon.img {
+        font-size: 38rpx;
+        display: block;
+        margin: 0 auto;
+      }
+    }
+  }
+  .week-chart {
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 272rpx;
+    top: 262rpx; // background: white;
+  }
+  .week-chart canvas {
+    width: 750rpx;
+    height: 272rpx;
+  }
+}
+
+// 生活指数
+.life-style {
+  @include flex-row; // border-top: 2rpx solid #e6e6e6;
+  flex-wrap: wrap;
+
+  .item {
+    float: left;
+    text-align: center;
+    width: 25%;
+    height: 188rpx;
+    border-right: 2rpx solid rgba(255, 255, 255, .1);
+    border-bottom: 2rpx solid rgba(255, 255, 255, .1);
+    box-sizing: border-box;
+    padding: 50rpx 0 0;
+  }
+  .content {
+    font-size: 36rpx;
+    margin-top: 20rpx;
+  }
+  .title {
+    icon {
+      font-size: 24rpx;
+      margin-right: 10rpx;
+      margin-top: -2rpx;
+    }
+    color: #fff;
+    opacity: 0.7;
+    font-size: 24rpx;
+    height: 24rpx;
+    line-height: 24rpx;
+  }
+}
+
+.source {
+  opacity: .6;
+  color: #fff;
+  padding: 24rpx 0 40rpx;
+  text-align: center;
+  line-height: 1;
+  white-space: nowrap;
+}
