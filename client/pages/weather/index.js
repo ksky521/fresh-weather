@@ -6,7 +6,7 @@ import {getWeather, getAir} from '../../lib/api-mock'
 /*</remove>*/
 
 /*<jdists trigger="prod">
-import {getMood, geocoder, getWeather, getAir} from '../../lib/api'
+import {getEmotionByOpenidAndDate, getMood, geocoder, getWeather, getAir} from '../../lib/api'
 </jdists>*/
 
 const app = getApp()
