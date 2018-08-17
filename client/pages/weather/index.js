@@ -20,7 +20,7 @@ let isUpdate = false
 Page({
   data: {
     // 页面数据
-    statusBarHeight: 40,
+    statusBarHeight: 32,
     backgroundImage: '../../images/cloud.jpg',
     backgroundColor: '#62aadc',
     current: {
