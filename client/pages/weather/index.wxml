@@ -4,7 +4,7 @@
     <icon type="edit"/>
   </view>
 
-  <view class="container" id="canvas-wrapper" style="padding-top: {{statusBarHeight}}px">
+  <view class="container" id="canvas-wrapper" style="padding-top: {{paddingTop}}px">
     <canvas canvas-id="effect" id="effect"></canvas>
     <view class="now">
       <view class="location" bindtap="chooseLocation">

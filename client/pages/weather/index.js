@@ -216,7 +216,7 @@ Page({
         this.setData({
           width,
           scale,
-          statusBarHeight: scale * res.statusBarHeight+12
+          paddingTop: res.statusBarHeight+12
         })
       }
     })
