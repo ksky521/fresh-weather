@@ -20,12 +20,13 @@ let isUpdate = false
 Page({
   data: {
     // 页面数据
+    statusBarHeight: 40,
     backgroundImage: '../../images/cloud.jpg',
     backgroundColor: '#62aadc',
     current: {
       temp: '0',
-      weather: '获取中',
-      humidity: 0,
+      weather: '数据获取中',
+      humidity: '1',
       icon: 'xiaolian'
     },
     today: {
@@ -42,7 +43,7 @@ Page({
     weeklyData: [],
     width: 375,
     scale: 1,
-    address: '海淀区西二旗',
+    address: '定位中',
     lat: 40.056974,
     lon: 116.307689
   },
@@ -210,9 +211,12 @@ Page({
     wx.getSystemInfo({
       success: (res) => {
         let width = res.windowWidth
+        let scale = width / 375
+        // console.log(scale * res.statusBarHeight*2+24)
         this.setData({
           width,
-          scale: width / 375
+          scale,
+          statusBarHeight: scale * res.statusBarHeight+12
         })
       }
     })
@@ -292,6 +296,10 @@ Page({
       icon: _tomorrow.dayIcon,
       weather: _tomorrow.day
     }
+
+    // daily.forEach((v) => {
+    //   v.time = v.time + 24 * 60 * 60 * 1000
+    // })
     // console.log(hourly)
     this.setData({
       hourlyData: hourly,
@@ -312,7 +320,7 @@ Page({
     // 延时画图
     this.drawChart()
     // 启动预取定时器
-    this._setPrefetchTimer()
+    this._setPrefetchTimer(1e3)
   },
   onHide() {
     clearTimeout(prefetchTimer)
@@ -320,12 +328,12 @@ Page({
   onShow() {
     this._setPrefetchTimer()
   },
-  _setPrefetchTimer() {
+  _setPrefetchTimer(delay = 10e3) {
     // 10s预取
     if (!app.globalData.currentMonthData.length && isUpdate) {
       prefetchTimer = setTimeout(() => {
         this.prefetch()
-      }, 10e3)
+      }, delay)
     }
   },
   prefetch() {

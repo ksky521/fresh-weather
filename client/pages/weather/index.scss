@@ -63,7 +63,6 @@ icon {
   overflow: hidden;
   position: relative;
   color: #fff;
-  padding-top: 64rpx;
 
   .location {
     text-align: center;
@@ -80,7 +79,7 @@ icon {
   }
   .air-quality {
     position: absolute;
-    top: 120rpx;
+    top: auto;
     left: 20rpx;
     height: 28rpx;
     line-height: 28rpx;
@@ -251,6 +250,7 @@ icon {
 .week {
   position: relative;
   padding: 40rpx 0;
+  min-height: 200rpx;
   .week-weather {
     @include flex-row;
     text-align: center;
