@@ -216,7 +216,7 @@ Page({
         this.setData({
           width,
           scale,
-          paddingTop: res.statusBarHeight+12
+          paddingTop: res.statusBarHeight + 12
         })
       }
     })
@@ -241,6 +241,8 @@ Page({
         }
       )
     } else {
+      // 获取缓存数据
+      this.setDataFromCache()
       this.getLocation()
     }
   },
@@ -321,6 +323,45 @@ Page({
     this.drawChart()
     // 启动预取定时器
     this._setPrefetchTimer(1e3)
+    // 缓存数据
+    this.dataCache()
+  },
+  dataCache() {
+    const {current, backgroundColor, backgroundImage, today, tomorrow, address, tips, hourlyData} = this.data
+    wx.setStorage({
+      key: 'defaultData',
+      data: {
+        current,
+        backgroundColor,
+        backgroundImage,
+        today,
+        tomorrow,
+        address,
+        tips,
+        hourlyData
+      }
+    })
+  },
+  setDataFromCache() {
+    wx.getStorage({
+      key: 'defaultData',
+      success: ({data}) => {
+        if (data && !isUpdate) {
+          // 存在并且没有获取数据成功，那么可以给首屏赋值上次数据
+          const {current, backgroundColor, backgroundImage, today, tomorrow, address, tips, hourlyData} = data
+          this.setData({
+            current,
+            backgroundColor,
+            backgroundImage,
+            today,
+            tomorrow,
+            address,
+            tips,
+            hourlyData
+          })
+        }
+      }
+    })
   },
   onHide() {
     clearTimeout(prefetchTimer)
