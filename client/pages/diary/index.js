@@ -1,6 +1,6 @@
 /*<remove trigger="prod">*/
-// import {jscode2session} from '../../lib/api-mock'
-import {getEmotionByOpenidAndDate, addEmotion, jscode2session} from '../../lib/api'
+import {jscode2session} from '../../lib/api-mock'
+import {getEmotionByOpenidAndDate, addEmotion} from '../../lib/api'
 /*</remove>*/
 
 /*<jdists trigger="prod">
