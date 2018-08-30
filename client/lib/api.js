@@ -1,9 +1,10 @@
 // import {SERVER_URL} from '../config'
+import Promise from './bluebird'
 
-const QQ_MAP_KEY = 'ZVXBZ-xxxx-xxxx-xxxx-RCSVK-LQFU6'
+const QQ_MAP_KEY = 'ZVXBZ-D6JKU-4IRVY-2OHZB-RCSVK-LQFU6'
 
 wx.cloud.init({
-  env: 'tianqi-xxxx'
+  env: 'tianqi-1d3bf9'
 })
 
 const db = wx.cloud.database()
@@ -15,14 +16,47 @@ export const getEmotionByOpenidAndDate = (openid, year, month) => {
 
   let start = new Date(year, month - 1, 1).getTime()
   let end = new Date(year, month, 1).getTime()
-  // console.log(start, end, `${year}-${nextMonth}-01 00:00:00`,`${year}-${month}-01 00:00:00`)
-  return db
-    .collection('diary')
-    .where({
-      openid,
-      tsModified: _.gte(start).and(_.lt(end))
-    })
-    .get()
+  // 这里因为限制 limit20，所以查询两次，一共31条（最多31天）记录
+  return new Promise((resolve, reject) => {
+    Promise.all([
+      db
+        .collection('diary')
+        .where({
+          openid,
+          tsModified: _.gte(start).and(_.lt(end))
+        })
+        .orderBy('tsModified', 'desc')
+        .limit(15)
+        .get(),
+      db
+        .collection('diary')
+        .where({
+          openid,
+          tsModified: _.gte(start).and(_.lt(end))
+        })
+        .orderBy('tsModified', 'asc')
+        .limit(16)
+        .get()
+    ])
+      .then((data) => {
+        let [data1, data2] = data
+        let set = new Set()
+        data1 = data1.data || []
+        data2 = data2.data || []
+        data = data1.concat(data2).filter((v) => {
+          if (set.has(v._id)) {
+            return false
+          }
+          set.add(v._id)
+          return true
+        })
+        resolve({data})
+      })
+      .catch((e) => {
+        console.log(e)
+        reject(e)
+      })
+  })
 }
 export const addEmotion = (openid, emotion) => {
   return db.collection('diary').add({

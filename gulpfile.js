@@ -44,15 +44,6 @@ gulp.task('json', () => {
 gulp.task('wxml', () => {
   return gulp
     .src(`${src}/**/*.wxml`)
-    .pipe(
-      isProd
-        ? htmlmin({
-            collapseWhitespace: true,
-            removeComments: true,
-            keepClosingSlash: true
-          })
-        : through.obj()
-    )
     .pipe(gulp.dest(dist))
 })
 gulp.task('wxs', () => {
@@ -82,7 +73,7 @@ gulp.task('images', () => {
 })
 
 gulp.task('js', () => {
-  const f = filter((file) => !/(mock|bluebird)/.test(file.path))
+  const f = filter((file) => !/(mock)/.test(file.path))
   gulp
     .src(`${src}/**/*.js`)
     .pipe(isProd ? f : through.obj())

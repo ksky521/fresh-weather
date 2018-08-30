@@ -371,7 +371,11 @@ Page({
   },
   _setPrefetchTimer(delay = 10e3) {
     // 10s预取
-    if (!app.globalData.currentMonthData.length && isUpdate) {
+    const now = new Date()
+    const year = now.getFullYear()
+    const month = now.getMonth() + 1
+    const data = app.globalData[`diary-${year}-${month}`] || []
+    if (!data.length && isUpdate) {
       prefetchTimer = setTimeout(() => {
         this.prefetch()
       }, delay)
@@ -387,8 +391,7 @@ Page({
       getEmotionByOpenidAndDate(openid, year, month)
         .then((r) => {
           const data = r.data || []
-          // console.log(data)
-          app.globalData.currentMonthData = data
+          app.globalData[`diary-${year}-${month}`] = data
         })
         .catch((e) => {})
     }
