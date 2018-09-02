@@ -1,6 +1,6 @@
 /*<remove trigger="prod">*/
-// import {jscode2session} from '../../lib/api-mock'
-import {getEmotionByOpenidAndDate, addEmotion, jscode2session} from '../../lib/api'
+import {jscode2session} from '../../lib/api-mock'
+import {getEmotionByOpenidAndDate, addEmotion} from '../../lib/api'
 /*</remove>*/
 
 /*<jdists trigger="prod">
@@ -29,7 +29,6 @@ Page({
     }
   },
   dateChange(e) {
-    // console.log(e)
     let {currentYear, currentMonth} = e.detail
     this.setData({
       daysStyle: []
@@ -119,7 +118,7 @@ Page({
     getEmotionByOpenidAndDate(this.data.openid, year, month)
       .then((r) => {
         const data = r.data || []
-        globalData.currentMonthData = data
+        globalData[`diary-${year}-${month}`] = data
         this._setDayData(data, year, month)
       })
       .catch((e) => {
@@ -151,10 +150,13 @@ Page({
         auth: 1,
         openid
       })
-      if (globalData.currentMonthData && globalData.currentMonthData.length) {
+      const now = new Date()
+      const year = now.getFullYear()
+      const month = now.getMonth() + 1
+      const data = globalData[`diary-${year}-${month}`] || []
+      if (data && data.length) {
         // 当前月份，存在缓存
-        const now = new Date()
-        that._setDayData(globalData.currentMonthData, now.getFullYear(), now.getMonth() + 1)
+        that._setDayData(data, year, month)
       } else {
         that.setCalendarColor()
       }
@@ -192,8 +194,13 @@ Page({
             todayEmotion: activeEmotion
           })
           // 将今天数据更新到globalData
-          if (globalData.currentMonthData.length) {
-            globalData.currentMonthData.push({
+          const now = new Date()
+          const year = now.getFullYear()
+          const month = now.getMonth() + 1
+          const data = globalData[`diary-${year}-${month}`] || []
+
+          if (data.length) {
+            data.push({
               openid,
               emotion: activeEmotion,
               tsModified: Date.now()

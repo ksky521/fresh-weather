@@ -1,9 +1,10 @@
 // import {SERVER_URL} from '../config'
+import Promise from './bluebird'
 
-const QQ_MAP_KEY = 'ZVXBZ-xxxx-xxxx-xxxx-RCSVK-LQFU6'
+const QQ_MAP_KEY = 'ZVXBZ-xxxxxxxxxxxxxxxxxxx-RCSVK-LQFU6'
 
 wx.cloud.init({
-  env: 'tianqi-xxxx'
+  env: 'tianqi-xxxxx'
 })
 
 const db = wx.cloud.database()
@@ -67,7 +68,6 @@ export const getEmotionByOpenidAndDate = (openid, year, month) => {
         resolve({data})
       })
       .catch((e) => {
-        // console.log(e)
         reject(e)
       })
   })

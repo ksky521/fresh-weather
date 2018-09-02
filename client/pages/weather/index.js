@@ -216,7 +216,7 @@ Page({
         this.setData({
           width,
           scale,
-          paddingTop: res.statusBarHeight+12
+          paddingTop: res.statusBarHeight + 12
         })
       }
     })
@@ -241,6 +241,8 @@ Page({
         }
       )
     } else {
+      // 获取缓存数据
+      this.setDataFromCache()
       this.getLocation()
     }
   },
@@ -321,6 +323,45 @@ Page({
     this.drawChart()
     // 启动预取定时器
     this._setPrefetchTimer(1e3)
+    // 缓存数据
+    this.dataCache()
+  },
+  dataCache() {
+    const {current, backgroundColor, backgroundImage, today, tomorrow, address, tips, hourlyData} = this.data
+    wx.setStorage({
+      key: 'defaultData',
+      data: {
+        current,
+        backgroundColor,
+        backgroundImage,
+        today,
+        tomorrow,
+        address,
+        tips,
+        hourlyData
+      }
+    })
+  },
+  setDataFromCache() {
+    wx.getStorage({
+      key: 'defaultData',
+      success: ({data}) => {
+        if (data && !isUpdate) {
+          // 存在并且没有获取数据成功，那么可以给首屏赋值上次数据
+          const {current, backgroundColor, backgroundImage, today, tomorrow, address, tips, hourlyData} = data
+          this.setData({
+            current,
+            backgroundColor,
+            backgroundImage,
+            today,
+            tomorrow,
+            address,
+            tips,
+            hourlyData
+          })
+        }
+      }
+    })
   },
   onHide() {
     clearTimeout(prefetchTimer)
@@ -330,7 +371,11 @@ Page({
   },
   _setPrefetchTimer(delay = 10e3) {
     // 10s预取
-    if (!app.globalData.currentMonthData.length && isUpdate) {
+    const now = new Date()
+    const year = now.getFullYear()
+    const month = now.getMonth() + 1
+    const data = app.globalData[`diary-${year}-${month}`] || []
+    if (!data.length && isUpdate) {
       prefetchTimer = setTimeout(() => {
         this.prefetch()
       }, delay)
@@ -346,8 +391,7 @@ Page({
       getEmotionByOpenidAndDate(openid, year, month)
         .then((r) => {
           const data = r.data || []
-          // console.log(data)
-          app.globalData.currentMonthData = data
+          app.globalData[`diary-${year}-${month}`] = data
         })
         .catch((e) => {})
     }
