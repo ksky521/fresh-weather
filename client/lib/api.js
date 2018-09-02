@@ -12,17 +12,65 @@ export const getEmotionByOpenidAndDate = (openid, year, month) => {
   const _ = db.command
   year = parseInt(year)
   month = parseInt(month)
-
+  const now = new Date()
+  const curMonth = now.getMonth()
+  const curYear = now.getFullYear()
+  const curDay = now.getDate()
   let start = new Date(year, month - 1, 1).getTime()
   let end = new Date(year, month, 1).getTime()
-  // console.log(start, end, `${year}-${nextMonth}-01 00:00:00`,`${year}-${month}-01 00:00:00`)
-  return db
-    .collection('diary')
-    .where({
-      openid,
-      tsModified: _.gte(start).and(_.lt(end))
-    })
-    .get()
+  // console.log(curYear, curDay, curMonth)
+  if (month - 1 === curMonth && curDay <= 20 && year === curYear) {
+    // 如果是当前月份并且天数少于20，那么就一次取出
+    return db
+      .collection('diary')
+      .where({
+        openid,
+        tsModified: _.gte(start).and(_.lt(end))
+      })
+      .get()
+  }
+
+  // 这里因为限制 limit20，所以查询两次，一共31条（最多31天）记录
+  return new Promise((resolve, reject) => {
+    Promise.all([
+      db
+        .collection('diary')
+        .where({
+          openid,
+          tsModified: _.gte(start).and(_.lt(end))
+        })
+        .orderBy('tsModified', 'desc')
+        .limit(15)
+        .get(),
+      db
+        .collection('diary')
+        .where({
+          openid,
+          tsModified: _.gte(start).and(_.lt(end))
+        })
+        .orderBy('tsModified', 'asc')
+        .limit(16)
+        .get()
+    ])
+      .then((data) => {
+        let [data1, data2] = data
+        let set = new Set()
+        data1 = data1.data || []
+        data2 = data2.data || []
+        data = data1.concat(data2).filter((v) => {
+          if (set.has(v._id)) {
+            return false
+          }
+          set.add(v._id)
+          return true
+        })
+        resolve({data})
+      })
+      .catch((e) => {
+        // console.log(e)
+        reject(e)
+      })
+  })
 }
 export const addEmotion = (openid, emotion) => {
   return db.collection('diary').add({
