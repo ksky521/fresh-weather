@@ -12,8 +12,8 @@ const STATIC_SERVER_URL = 'https://tianqi-1d3bf9.tcb.qcloud.la'
 const BACKGROUND_PERFIXER = `${STATIC_SERVER_URL}/bg`
 const WEATHER_IMAGE_PERFIXER = `${STATIC_SERVER_URL}/icon`
 
-const KEY = 'xxxxxxxxxxxx'
-const USER_ID = 'HE18888888888888899'
+const KEY = 'xxxxxxxxxxxx'   //和风天气中应用的key名称
+const USER_ID = 'HE18888888888888899' //和风天气中应用的密钥ID
 
 const WECHAT_APPID = 'wx8696xxxxxxxxxce6'
 const WECHAT_APP_SECRET = '12wwwwwxxxxxxxxxxxxxxxx2'
@@ -454,7 +454,6 @@ const $ = {
         status: 0,
         effect: $.getEffectSettings(now.cond_code),
         oneWord: $.getOneWord(now.cond_code),
-        status: 0,
         current: $._now(now, result),
         hourly: $._hourly(hourly, result),
         lifeStyle: $._lifestyle(lifestyle),
@@ -463,7 +462,7 @@ const $ = {
     } else {
       return {
         status: 500,
-        msg: data.HeWeather6.status
+        msg: data.HeWeather6[0].status
       }
     }
   }

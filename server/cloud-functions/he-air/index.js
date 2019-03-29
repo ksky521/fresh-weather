@@ -1,5 +1,5 @@
 // const path = require('path')
-const API_URL = 'https://free-api.heweather.com/s6/air/now'
+const API_URL = 'https://free-api.heweather.net/s6/air/now'
 const request = require('request')
 /*<jdists import="../../inline/utils.js" />*/
 
@@ -11,11 +11,8 @@ exports.main = async (event) => {
   let location = event.city
   let params = {
     location,
-    t: Math.floor(Date.now() / 1e3),
-    unit: 'm'
+    key: 'XXXXX' //和风天气中应用的密钥
   }
-  // 生成签名
-  params.sign = $.generateSignature(params)
   let query = []
   for (let i in params) {
     query.push(`${i}=${encodeURIComponent(params[i])}`)
