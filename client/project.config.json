@@ -1,3 +1,4 @@
 {
-  "cloudfunctionRoot": "./cloud-functions/"
+  "cloudfunctionRoot": "./cloud-functions/",
+  "appid": "XXXX"
 }
