@@ -7,7 +7,7 @@
     "start": "gulp watch",
     "dev": "gulp dev",
     "cloud": "gulp cloud:dev",
-    "build": "gulp build --type prod",
+    "build": "cross-env NODE_ENV=production gulp build",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "nodemonConfig": {
@@ -39,7 +39,7 @@
     "gulp-sass": "^4.0.1",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.0",
-    "minimist": "^1.2.0",
+    "cross-env": "^5.2.0",
     "nodemon": "^1.18.3",
     "postcss-font-base64": "^1.0.5",
     "postcss-px2rpx": "0.0.4",

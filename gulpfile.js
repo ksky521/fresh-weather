@@ -5,7 +5,6 @@ const del = require('del')
 const through = require('through2')
 const colors = require('ansi-colors')
 const log = require('fancy-log')
-const argv = require('minimist')(process.argv.slice(2))
 
 const postcss = require('gulp-postcss')
 const pxtorpx = require('postcss-px2rpx')
@@ -25,7 +24,7 @@ const jdists = require('gulp-jdists')
 
 const src = './client'
 const dist = './dist'
-const isProd = argv.type === 'prod'
+const isProd = process.env.NODE_ENV === 'production' || false; // 'development'
 
 const handleError = (err) => {
   console.log('\n')
